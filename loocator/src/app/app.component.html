@@ -13,9 +13,13 @@
       <span style="position:absolute; width:49%; left:51%; height:100%; background:inherit" #panel></span>
   </div>
 </div>
-<h3>Enter your current location: </h3>
-<input [(ngModel)]="current_address" type="text" placeholder="current location">
+<div [hidden]="!showCurrentLocationInput">
+  <h3>Enter your current location: </h3>
+  <input [(ngModel)]="current_address" type="text" placeholder="current location" #currentAddress>
+</div>
 <h3>Enter the name of the building where you want to go: </h3>
-<input [(ngModel)]="desired_address" type="text" placeholder="desired location">
+<input [(ngModel)]="desired_address" type="text" placeholder="desired location" #desiredAddress>
+<br>
+<button class="btn btn-primary" (click)="getRoute(desiredAddress.value, currentAddress.value)">Get Route</button>
 
 

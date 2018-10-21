@@ -46,15 +46,15 @@ export class HereMapService implements OnInit{
    getMapSideBar(instructionContainer: ElementRef) {
     this.routeInstructionsContainer = instructionContainer;
    }
-  //  pointA: string, pointB: string
-   getRouting() {
+  
+   getRouting(pointA: string, pointB: string) {
      const routingParams = {
       // The routing mode:
       mode: 'fastest;car',
       // The start point of the route:
-      waypoint0: 'geo!42.44987345,-76.48178864399958',
+      waypoint0: 'geo!' + pointA,
       // The end point of the route:
-      waypoint1: 'geo!42.4528206,-76.4916375',
+      waypoint1: 'geo!' + pointB,
       // To retrieve the shape of the route we choose the route
       // representation mode 'display'
       representation: 'display'
@@ -62,7 +62,6 @@ export class HereMapService implements OnInit{
 
     const onResult = (result: any) => {
       if(result.response.route) {
-        console.log(result.response);
         const route = result.response.route[0];
         // Pick the route's shape:
         const routeShape = route.shape;
@@ -97,7 +96,6 @@ export class HereMapService implements OnInit{
       
         this.addWaypointsToPanel(route.waypoint);
         this.addManueversToPanel(route);
-        console.log(route);
         // this.addSummaryToPanel(route.summary);
       }
     }
@@ -155,14 +153,12 @@ export class HereMapService implements OnInit{
           lng: maneuver.position.longitude} ,
           {icon: dotIcon});
         marker.instruction = maneuver.instruction;
-        console.log(group);
         group.addObject(marker);
       }
     }
 
     group.addEventListener('tap', function (evt) {
       this.map.setCenter(evt.target.getPosition());
-      console.log
       this.openBubble(
          evt.target.getPosition(), evt.target.instruction);
     }, false);
